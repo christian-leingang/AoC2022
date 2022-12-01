@@ -2,9 +2,9 @@
 
 #include <string>
 #include <vector>
-#include <filesystem>
 #include <algorithm>
 #include <fstream>
+#include <iostream>
 
 namespace commons
 {
@@ -17,6 +17,19 @@ namespace commons
         while (input_file >> temp) vec.push_back(temp);
 
         input_file.close();
+        return vec;
+    }
+
+    std::vector<std::string> file_to_str_vec(const char *input)
+    {
+        std::string temp;
+        std::vector<std::string> vec = {};
+        std::fstream file(input);
+
+        while (std::getline(file, temp))
+            vec.push_back(temp);
+
+        file.close();
         return vec;
     }
 } // namespace commons
