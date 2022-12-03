@@ -1,11 +1,11 @@
 #include "io.h"
 
-#include <string>
-#include <vector>
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace commons
 {
@@ -46,5 +46,32 @@ namespace commons
 
         file.close();
         return vec;
+    }
+
+    char findMatchingCharTwoStrings(std::string str1, std::string str2)
+    {
+        for (char c : str1)
+            for (char d : str2)
+                if (c == d)
+                    return c;
+        return 0;
+    }
+
+    char findMatchingCharThreeStrings(std::string str1, std::string str2, std::string str3)
+    {
+        for (char c : str1)
+            for (char d : str2)
+                for (char e : str3)
+                    if (c == d && c == e)
+                        return c;
+        return 0;
+    }
+
+    int getIntValueFromChar(char c)
+    {
+        if (isupper(c))
+            return ((int)c - 38);
+        else
+            return ((int)c - 96);
     }
 } // namespace commons
