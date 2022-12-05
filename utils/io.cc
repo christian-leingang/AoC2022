@@ -85,13 +85,13 @@ namespace commons
             seglist.push_back(segment);
         return std::make_pair(seglist.at(0), seglist.at(1));
     }
-    std::pair<int, int> splitByCharToInt(std::string text, char c)
-    {
-        std::string segment;
-        std::stringstream textss{text};
-        std::vector<std::string> seglist;
-        while (std::getline(textss, segment, c))
-            seglist.push_back(segment);
-        return std::make_pair(std::stoi(seglist.at(0)), std::stoi(seglist.at(1)));
-    }
+    // std::pair<int, int> splitByCharToInt(std::string text, char c)
+    // {
+    //     std::string segment;
+    //     std::stringstream textss{text};
+    //     std::vector<std::string> seglist;
+    //     while (std::getline(textss, segment, c))
+    //         seglist.push_back(segment);
+    //     return std::make_pair(std::stoi(seglist.at(0)), std::stoi(seglist.at(1)));
+    // }
 } // namespace commons
