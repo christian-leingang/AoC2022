@@ -49,6 +49,18 @@ namespace commons
         return vec;
     }
 
+    std::vector<char> file_to_char_vec(const char *input)
+    {
+        std::string temp;
+        std::fstream file(input);
+
+        std::getline(file, temp);
+        std::vector<char> vec(temp.begin(), temp.end());
+        file.close();
+
+        return vec;
+    }
+
     char findMatchingCharTwoStrings(std::string str1, std::string str2)
     {
         for (char c : str1)
@@ -94,4 +106,5 @@ namespace commons
     //         seglist.push_back(segment);
     //     return std::make_pair(std::stoi(seglist.at(0)), std::stoi(seglist.at(1)));
     // }
+
 } // namespace commons
