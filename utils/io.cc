@@ -97,6 +97,21 @@ namespace commons
             seglist.push_back(segment);
         return std::make_pair(seglist.at(0), seglist.at(1));
     }
+
+    std::vector<std::string> splitByCharToStringVec(std::string text, char c)
+    {
+        std::string segment;
+        std::stringstream textss{text};
+        std::vector<std::string> seglist;
+        while (std::getline(textss, segment, c))
+            seglist.push_back(segment);
+        return seglist;
+    }
+
+    bool is_digits(const std::string &str)
+    {
+        return std::all_of(str.begin(), str.end(), ::isdigit); // C++11
+    }
     // std::pair<int, int> splitByCharToInt(std::string text, char c)
     // {
     //     std::string segment;
