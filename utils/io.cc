@@ -23,6 +23,27 @@ namespace commons
         return vec;
     }
 
+    std::vector<std::vector<int>> file_to_square_int_vec(const char *input)
+    {
+        std::string temp;
+        std::vector<std::vector<int>> vec = {};
+        std::ifstream input_file(input);
+
+        while (input_file >> temp)
+        {
+            std::vector<char> data(temp.begin(), temp.end());
+            std::vector<int> lineNumbers;
+            for (auto c : data)
+            {
+                int curDigit = c - '0';
+                lineNumbers.push_back(curDigit);
+            }
+            vec.push_back(lineNumbers);
+        }
+        input_file.close();
+        return vec;
+    }
+
     std::vector<std::string> file_to_str_vec(const char *input)
     {
         std::string temp;
@@ -111,6 +132,18 @@ namespace commons
     bool is_digits(const std::string &str)
     {
         return std::all_of(str.begin(), str.end(), ::isdigit); // C++11
+    }
+
+    //call with print_vec<int>(vec)
+    template <typename T>
+    void print_vec(std::vector<std::vector<T>> boolVec)
+    {
+        for (size_t i = 0; i < boolVec.size(); i++)
+        {
+            for (size_t j = 0; j < boolVec.at(i).size(); j++)
+                std::cout << boolVec.at(i).at(j);
+            std::cout << std::endl;
+        }
     }
     // std::pair<int, int> splitByCharToInt(std::string text, char c)
     // {
