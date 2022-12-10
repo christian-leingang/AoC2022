@@ -134,7 +134,7 @@ namespace commons
         return std::all_of(str.begin(), str.end(), ::isdigit); // C++11
     }
 
-    //call with print_vec<int>(vec)
+    // call with print_vec<int>(vec)
     template <typename T>
     void print_vec(std::vector<std::vector<T>> boolVec)
     {
@@ -144,6 +144,11 @@ namespace commons
                 std::cout << boolVec.at(i).at(j);
             std::cout << std::endl;
         }
+    }
+
+    bool contains(std::string text, std::string word)
+    {
+        return text.rfind(word, 0) == 0;
     }
     // std::pair<int, int> splitByCharToInt(std::string text, char c)
     // {
