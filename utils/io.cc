@@ -8,8 +8,58 @@
 #include <vector>
 #include <sstream>
 
+class Coord3d
+{
+private:
+    int x, y, z;
+
+public:
+    Coord3d(int num1, int num2, int num3)
+    {
+        this->x = num1;
+        this->y = num2;
+        this->z = num3;
+    }
+    Coord3d(){};
+
+    Coord3d operator+(const Coord3d &coord)
+    {
+        Coord3d coord3d{};
+        coord3d.x = this->x + coord.x;
+        coord3d.y = this->y + coord.y;
+        coord3d.z = this->z + coord.z;
+        return coord3d;
+    };
+
+    bool operator==(const Coord3d &coord)
+    {
+        return (this->x == coord.x) && (this->y == coord.y) && (this->z == coord.z);
+    };
+};
+
 namespace commons
 {
+
+    std::pair<std::string, std::string> splitByCharToString(std::string text, char c)
+    {
+        std::string segment;
+        std::stringstream textss{text};
+        std::vector<std::string> seglist;
+        while (std::getline(textss, segment, c))
+            seglist.push_back(segment);
+        return std::make_pair(seglist.at(0), seglist.at(1));
+    }
+
+    std::vector<std::string> splitByCharToStringVec(std::string text, char c)
+    {
+        std::string segment;
+        std::stringstream textss{text};
+        std::vector<std::string> seglist;
+        while (std::getline(textss, segment, c))
+            seglist.push_back(segment);
+        return seglist;
+    }
+
     std::vector<int> file_to_int_vec(const char *input)
     {
         int temp;
@@ -23,6 +73,18 @@ namespace commons
         return vec;
     }
 
+    std::vector<int> str_to_int_vec(const std::string &str)
+    {
+        std::vector<char> data(str.begin(), str.end());
+        std::vector<int> lineNumbers;
+        for (auto c : data)
+        {
+            int curDigit = c - '0';
+            lineNumbers.push_back(curDigit);
+        }
+        return lineNumbers;
+    }
+
     std::vector<std::vector<int>> file_to_square_int_vec(const char *input)
     {
         std::string temp;
@@ -31,13 +93,7 @@ namespace commons
 
         while (input_file >> temp)
         {
-            std::vector<char> data(temp.begin(), temp.end());
-            std::vector<int> lineNumbers;
-            for (auto c : data)
-            {
-                int curDigit = c - '0';
-                lineNumbers.push_back(curDigit);
-            }
+            std::vector<int> lineNumbers = str_to_int_vec(temp);
             vec.push_back(lineNumbers);
         }
         input_file.close();
@@ -70,6 +126,21 @@ namespace commons
         return vec;
     }
 
+    std::vector<std::pair<char, int>> file_to_char_int_pair_vec(const char *input)
+    {
+        std::string temp;
+        std::vector<std::pair<char, int>> vec = {};
+        std::fstream file(input);
+
+        while (std::getline(file, temp))
+        {
+            auto splitStr = splitByCharToString(temp, ' ');
+            vec.push_back(std::make_pair(splitStr.first[0], std::atoi(splitStr.second.c_str())));
+        }
+        file.close();
+        return vec;
+    }
+
     std::vector<char> file_to_char_vec(const char *input)
     {
         std::string temp;
@@ -79,6 +150,22 @@ namespace commons
         std::vector<char> vec(temp.begin(), temp.end());
         file.close();
 
+        return vec;
+    }
+
+    std::vector<Coord3d> file_to_3d_int_vec(const char *input)
+    {
+        std::string temp;
+        std::vector<Coord3d> vec = {};
+        std::ifstream input_file(input);
+
+        while (input_file >> temp)
+        {
+            std::vector<std::string> strVec = splitByCharToStringVec(temp, ',');
+            Coord3d coord3d{std::atoi(strVec[0].c_str()), std::atoi(strVec[1].c_str()), std::atoi(strVec[2].c_str())};
+            vec.push_back(coord3d);
+        }
+        input_file.close();
         return vec;
     }
 
@@ -109,26 +196,6 @@ namespace commons
             return ((int)c - 96);
     }
 
-    std::pair<std::string, std::string> splitByCharToString(std::string text, char c)
-    {
-        std::string segment;
-        std::stringstream textss{text};
-        std::vector<std::string> seglist;
-        while (std::getline(textss, segment, c))
-            seglist.push_back(segment);
-        return std::make_pair(seglist.at(0), seglist.at(1));
-    }
-
-    std::vector<std::string> splitByCharToStringVec(std::string text, char c)
-    {
-        std::string segment;
-        std::stringstream textss{text};
-        std::vector<std::string> seglist;
-        while (std::getline(textss, segment, c))
-            seglist.push_back(segment);
-        return seglist;
-    }
-
     bool is_digits(const std::string &str)
     {
         return std::all_of(str.begin(), str.end(), ::isdigit); // C++11
@@ -150,6 +217,27 @@ namespace commons
     {
         return text.rfind(word, 0) == 0;
     }
+
+    std::vector<std::pair<std::string, std::string>> vec_to_str_pair(std::vector<std::string> &vec)
+    {
+        std::vector<std::pair<std::string, std::string>> pair_vec;
+        std::string firstElement{""};
+
+        for (auto line : vec)
+        {
+            if (line == "")
+                continue;
+            if (firstElement == "")
+                firstElement = line;
+            else
+            {
+                pair_vec.push_back(std::make_pair(firstElement, line));
+                firstElement = "";
+            }
+        }
+        return pair_vec;
+    }
+
     // std::pair<int, int> splitByCharToInt(std::string text, char c)
     // {
     //     std::string segment;
