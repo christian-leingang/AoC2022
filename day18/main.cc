@@ -60,7 +60,7 @@ int main()
     // int part_02_int = part_02(input_p);
     part_02(input_p);
 
-    std::cout << part_01_int << "\n";
+    // std::cout << part_01_int << "\n";
     // std::cout << part_02_int << "\n";
     return 0;
 }
